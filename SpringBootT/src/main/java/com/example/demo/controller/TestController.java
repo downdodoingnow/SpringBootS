@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.Student;
 import com.example.demo.service.ClassMapperService;
+import com.example.demo.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,9 @@ import java.util.List;
 public class TestController {
     @Autowired
     private ClassMapperService service;
+    @Autowired
+    private RedisUtils redisUtils;
+
     @GetMapping("/test")
     public String test(){
         return "Hello world";
@@ -33,5 +37,12 @@ public class TestController {
             jsonArray.add(jsonObject);
         }
         return jsonArray.toJSONString();
+    }
+
+    @GetMapping("test_redis")
+    public String test_redis(){
+        System.out.println("test_redis");
+        redisUtils.set("name","dengzi");
+        return (String) redisUtils.get("name");
     }
 }
