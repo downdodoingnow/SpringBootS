@@ -9,5 +9,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 class SpringBootTApplicationTests {
     @Test
     void contextLoads() {
+
     }
 }
