@@ -7,6 +7,7 @@ import com.example.demo.dao.UserRepository;
 import com.example.demo.entity.DepartmentEntity;
 import com.example.demo.entity.Student;
 import com.example.demo.entity.UserEntity;
+import com.example.demo.rabbitMQ.Sender;
 import com.example.demo.service.ClassMapperService;
 import com.example.demo.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class TestController {
     UserRepository userRepository;
     @Autowired
     RepartmentRepository departmentRepository;
+
+    @Autowired
+    Sender sender;
 
     @GetMapping("/test")
     public String test(){
@@ -89,6 +93,12 @@ public class TestController {
         // 写入用户信息
         userRepository.saveAll(Stream.of(entity1, entity2, entity3, entity4).collect(Collectors.toList()));
         userRepository.flush();
+        return "okk";
+    }
+
+    @GetMapping("test_rabbit")
+    public String test_rabbit(){
+        sender.send();
         return "okk";
     }
 }
